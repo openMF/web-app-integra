@@ -16,6 +16,7 @@ import { WarningDialogComponent } from './warning-dialog/warning-dialog.componen
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
@@ -32,6 +33,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   /** Username of authenticated user. */
   username: string;
+  /** Tenant name */
+  tenant: string;
   /** Activity Form. */
   activityForm: any;
   /** Search Text. */
@@ -57,13 +60,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @param {MatDialog} dialog MatDialog.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
+   * @param {SettingsService} settingsService SettingsService.
    */
   constructor(private authenticationService: AuthenticationService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+              private popoverService: PopoverService,
+              private settingsService: SettingsService) { }
 
   /**
    * Sets the username of the authenticated user.
@@ -72,11 +77,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
+    this.tenant = this.tenantIdentifier();    
     this.setFilteredActivities();
     if (!this.authenticationService.hasDialogBeenShown()) {
       this.dialog.open(WarningDialogComponent);
       this.authenticationService.showDialog();
     }
+  }
+
+  tenantIdentifier() {
+    if (!this.settingsService.tenantIdentifier || this.settingsService.tenantIdentifier === '') {
+      return 'default';
+    }
+    return this.settingsService.tenantIdentifier;
   }
 
   /**

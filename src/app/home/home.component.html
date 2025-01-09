@@ -10,7 +10,7 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title class="title"> {{ 'labels.text.Welcome' | translate }}, {{ username }}! </mat-card-title>
+      <mat-card-title class="title"> ¡{{ 'labels.text.Welcome' | translate }} {{ username }} a {{ tenant | titlecase}}! </mat-card-title>
     </mat-card-header>
 
     <mat-card-content #searchActivity>
@@ -27,8 +27,8 @@
         </mat-option>
       </mat-autocomplete>
     </mat-card-content>
-
-    <img mat-card-image src="assets/images/mifos_lg-logo.png" alt="Mifos X" />
+    
+    <img mat-card-image src="assets/images/{{ tenant }}.png" alt="Mifos X" />
   </mat-card>
 </div>
 

@@ -4,7 +4,7 @@
       <mat-form-field class="search-box">
         <input
           matInput
-          placeholder="Search by client name, external Id, mobile"
+          placeholder="Buscar por Nombre, Cuenta, CURP, Télefono"
           class="search-box"
           (keydown.enter)="search($event.target.value)"
         />
@@ -51,7 +51,7 @@
 
       <!-- External ID Column -->
       <ng-container matColumnDef="externalId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.External Id' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Person Id' | translate }}</th>
         <td mat-cell *matCellDef="let row">
           <mifosx-external-identifier display="left" externalId="{{ row.externalId }}"></mifosx-external-identifier>
         </td>
